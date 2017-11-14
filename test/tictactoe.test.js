@@ -12,4 +12,13 @@ describe("TicTacToe should", () => {
         let tictactoe = new Tictactoe()
         expect(tictactoe.currentPlayer).toBe("X")
     })
+
+    it("puts an X in a position", () => {
+        tictactoe = new Tictactoe()
+        tictactoe.play(0, 0)
+        expect(tictactoe.board).toEqual({
+            "X" : [{x: 0, y: 0}],
+            "O" : []
+        })
+    })
 })
