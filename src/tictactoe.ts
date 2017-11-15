@@ -12,7 +12,7 @@ class Tictactoe {
         this.board = board;
     }
 
-    public play(coordinate: Coordinate) {
+    public play(coordinate: Coordinate): void {
         this.board.placeMark(this.currentPlayer, coordinate);
         this.currentPlayer = this.getNextPlayer();
     }

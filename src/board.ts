@@ -81,7 +81,7 @@ class Board {
         }
     }
 
-    private cellIsFilled(coordinate: Coordinate) {
+    private cellIsFilled(coordinate: Coordinate): boolean {
         const index: number = this.calculateBoardCellIndex(coordinate);
         return !(this.cells[index] instanceof EmptyMark);
     }
