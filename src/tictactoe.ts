@@ -1,4 +1,5 @@
 import Board from "./board";
+import Coordinate from "./coordinate";
 
 const PLAYER_X = "X";
 const PLAYER_O = "O";
@@ -7,13 +8,13 @@ class Tictactoe {
     private board: Board;
     private currentPlayer: string;
 
-    constructor(board) {
+    constructor(board: Board) {
         this.currentPlayer = PLAYER_X;
         this.board = board;
     }
 
-    public play(x, y) {
-        this.board.placeMark(this.currentPlayer, x, y);
+    public play(coordinate: Coordinate) {
+        this.board.placeMark(this.currentPlayer, coordinate);
         this.currentPlayer = this.getNextPlayer();
     }
 

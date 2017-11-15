@@ -1,3 +1,4 @@
+import Coordinate from "./coordinate";
 import ForbiddenMovement from "./forbidden-movement-error";
 import MarkOutOfBounds from "./mark-out-of-bounds-error";
 
@@ -5,12 +6,15 @@ const MAX_COORDINATE = 2;
 const MIN_COORDINATE = 0;
 const BOARD_LENGTH = 9;
 
-function calculateBoardCellIndex(x, y) {
-    return x + (y * 3);
+function calculateBoardCellIndex(coordinate: Coordinate) {
+    return coordinate.X() + (coordinate.Y() * 3);
 }
 
-function isOutOfBounds(x, y) {
-    return x > MAX_COORDINATE || y > MAX_COORDINATE || x < MIN_COORDINATE || y < MIN_COORDINATE;
+function isOutOfBounds(coordinate: Coordinate) {
+    return coordinate.X() > MAX_COORDINATE
+            || coordinate.Y() > MAX_COORDINATE
+            || coordinate.X() < MIN_COORDINATE
+            || coordinate.Y() < MIN_COORDINATE;
 }
 
 class Board {
@@ -20,12 +24,12 @@ class Board {
         this.cells = {};
     }
 
-    public placeMark(mark, x, y) {
-        if (isOutOfBounds(x, y)) {
+    public placeMark(mark: string, coordinate: Coordinate) {
+        if (isOutOfBounds(coordinate)) {
             throw new MarkOutOfBounds();
         }
 
-        const boardCellIndex = calculateBoardCellIndex(x, y);
+        const boardCellIndex = calculateBoardCellIndex(coordinate);
 
         if (typeof this.cells[boardCellIndex] !== "undefined") {
             throw new ForbiddenMovement();
