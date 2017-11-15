@@ -1,6 +1,9 @@
 import Coordinate from "./coordinate";
+import EmptyMark from "./empty-mark";
 import ForbiddenMovement from "./forbidden-movement-error";
+import Mark from "./mark";
 import MarkOutOfBounds from "./mark-out-of-bounds-error";
+import PlayerMark from "./player-mark";
 
 const MAX_COORDINATE: number = 2;
 const MIN_COORDINATE: number = 0;
@@ -11,35 +14,54 @@ class Board {
 
     constructor() {
         this.cells = {};
+        this.inizializeBoard();
     }
 
-    public placeMark(mark: string, coordinate: Coordinate): void {
+    public placeMark(mark: PlayerMark, coordinate: Coordinate): void {
         if (this.isOutOfBounds(coordinate)) {
             throw new MarkOutOfBounds();
         }
 
         const boardCellIndex = this.calculateBoardCellIndex(coordinate);
 
-        if (typeof this.cells[boardCellIndex] !== "undefined") {
+        if (this.cellIsFilled(coordinate)) {
             throw new ForbiddenMovement();
         }
 
-        this.cells[boardCellIndex] = mark;
+        this.fillCell(mark, coordinate);
     }
 
-    public threeInARow(mark): boolean {
-        return (this.cells[0] === mark && this.cells[1] === mark && this.cells[2] === mark)
-         || (this.cells[3] === mark && this.cells[4] === mark && this.cells[5] === mark)
-         || (this.cells[6] === mark && this.cells[7] === mark && this.cells[8] === mark)
-         || (this.cells[0] === mark && this.cells[3] === mark && this.cells[6] === mark)
-         || (this.cells[1] === mark && this.cells[4] === mark && this.cells[7] === mark)
-         || (this.cells[2] === mark && this.cells[5] === mark && this.cells[8] === mark)
-         || (this.cells[2] === mark && this.cells[4] === mark && this.cells[6] === mark)
-         || (this.cells[0] === mark && this.cells[4] === mark && this.cells[8] === mark);
+    public threeInARow(mark: PlayerMark): boolean {
+        return (Mark.equals(this.cells[0], mark)
+                && Mark.equals(this.cells[1], mark)
+                && Mark.equals(this.cells[2], mark))
+        || (Mark.equals(this.cells[3], mark)
+                && Mark.equals(this.cells[4], mark)
+                && Mark.equals(this.cells[5], mark))
+        || (Mark.equals(this.cells[6], mark)
+                && Mark.equals(this.cells[7], mark)
+                && Mark.equals(this.cells[8], mark))
+        || (Mark.equals(this.cells[0], mark)
+                && Mark.equals(this.cells[3], mark)
+                && Mark.equals(this.cells[6], mark))
+        || (Mark.equals(this.cells[1], mark)
+                && Mark.equals(this.cells[4], mark)
+                && Mark.equals(this.cells[7], mark))
+        || (Mark.equals(this.cells[2], mark)
+                && Mark.equals(this.cells[5], mark)
+                && Mark.equals(this.cells[8], mark))
+        || (Mark.equals(this.cells[2], mark)
+                && Mark.equals(this.cells[4], mark)
+                && Mark.equals(this.cells[6], mark))
+        || (Mark.equals(this.cells[0], mark)
+                && Mark.equals(this.cells[4], mark)
+                && Mark.equals(this.cells[8], mark));
     }
 
     public isFull(): boolean {
-        return Object.keys(this.cells).length === BOARD_LENGTH;
+        return Object.keys(this.cells).filter((element): boolean => {
+            return !(this.cells[element] instanceof EmptyMark);
+        }).length === BOARD_LENGTH;
     }
 
     private isOutOfBounds(coordinate: Coordinate): boolean {
@@ -51,6 +73,22 @@ class Board {
     
     private calculateBoardCellIndex(coordinate: Coordinate): number {
         return coordinate.X() + (coordinate.Y() * 3);
+    }
+
+    private inizializeBoard(): void {
+        for (let i = 0; i < BOARD_LENGTH; i ++) {
+            this.cells[i] = new EmptyMark();
+        }
+    }
+
+    private cellIsFilled(coordinate: Coordinate) {
+        const index: number = this.calculateBoardCellIndex(coordinate);
+        return !(this.cells[index] instanceof EmptyMark);
+    }
+
+    private fillCell(mark: PlayerMark, coordinate: Coordinate): void {
+        const index: number = this.calculateBoardCellIndex(coordinate);
+        this.cells[index] = mark;
     }
 }
 
