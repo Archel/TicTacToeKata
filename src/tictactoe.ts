@@ -1,15 +1,14 @@
 import Board from "./board";
 import Coordinate from "./coordinate";
-
-const PLAYER_X = "X";
-const PLAYER_O = "O";
+import Mark from "./mark";
+import PlayerMark from "./player-mark";
 
 class Tictactoe {
     private board: Board;
-    private currentPlayer: string;
+    private currentPlayer: PlayerMark;
 
     constructor(board: Board) {
-        this.currentPlayer = PLAYER_X;
+        this.currentPlayer = PlayerMark.X();
         this.board = board;
     }
 
@@ -18,13 +17,16 @@ class Tictactoe {
         this.currentPlayer = this.getNextPlayer();
     }
 
-    public winner(): string {
-        if (this.board.threeInARow(PLAYER_X)) {
-            return PLAYER_X;
+    public winner(): PlayerMark {
+        const playerX = PlayerMark.X();
+        const playerO = PlayerMark.O();
+
+        if (this.board.threeInARow(playerX)) {
+            return playerX;
         }
 
-        if (this.board.threeInARow(PLAYER_O)) {
-            return PLAYER_O;
+        if (this.board.threeInARow(playerO)) {
+            return playerO;
         }
 
         return null;
@@ -34,8 +36,12 @@ class Tictactoe {
         return this.winner() === null && this.board.isFull();
     }
 
-    private getNextPlayer(): string {
-        return this.currentPlayer === PLAYER_X ? PLAYER_O : PLAYER_X;
+    public whoIsCurrentPlayer(): PlayerMark {
+        return this.currentPlayer;
+    }
+
+    private getNextPlayer(): PlayerMark {
+        return Mark.equals(this.currentPlayer, PlayerMark.X()) ? PlayerMark.O() : PlayerMark.X();
     }
 }
 
