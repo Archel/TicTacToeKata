@@ -18,7 +18,7 @@ class Tictactoe {
         this.currentPlayer = this.getNextPlayer();
     }
 
-    public winner() {
+    public winner(): string {
         if (this.board.threeInARow(PLAYER_X)) {
             return PLAYER_X;
         }
@@ -30,11 +30,11 @@ class Tictactoe {
         return null;
     }
 
-    public isDraw() {
+    public isDraw(): boolean {
         return this.winner() === null && this.board.isFull();
     }
 
-    private getNextPlayer() {
+    private getNextPlayer(): string {
         return this.currentPlayer === PLAYER_X ? PLAYER_O : PLAYER_X;
     }
 }
