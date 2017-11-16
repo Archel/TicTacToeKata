@@ -1,9 +1,7 @@
 import Board from "../src/board";
 import Coordinate, { Column, Row } from "../src/coordinate";
 import ForbiddenMovement from "../src/forbidden-movement-error";
-import Mark from "../src/mark";
-import MarkOutOfBounds from "../src/mark-out-of-bounds-error";
-import PlayerMark from "../src/player-mark";
+import { Mark } from "../src/mark";
 import Tictactoe from "../src/tictactoe";
 
 // - At first the game starts with the X player
@@ -22,7 +20,7 @@ describe("TicTacToe should", () => {
     });
 
     it("start with X player", () => {
-        expect(tictactoe.whoIsCurrentPlayer().equals(PlayerMark.X())).toBe(true);
+        expect(tictactoe.whoIsCurrentPlayer() === Mark.X).toBe(true);
     });
 
     it("throws an exception if we do a incorrect movement", () => {
@@ -40,7 +38,7 @@ describe("TicTacToe should", () => {
         tictactoe.play(new Coordinate(Row.bottom, Column.center));
         tictactoe.play(new Coordinate(Row.top, Column.right));
 
-        expect(tictactoe.winner().equals(PlayerMark.X())).toBe(true);
+        expect(tictactoe.winner() === Mark.X).toBe(true);
     });
 
     it("has a draw game", () => {
