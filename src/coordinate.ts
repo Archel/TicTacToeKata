@@ -1,17 +1,29 @@
 export default class Coordinate {
-    private x: number;
-    private y: number;
+    private x: Row;
+    private y: Column;
 
-    constructor(x: number, y: number) {
+    constructor(x: Row, y: Column) {
         this.x = x;
         this.y = y;
     }
 
-    public X(): number {
+    public X(): Row {
         return this.x;
     }
 
-    public Y(): number {
+    public Y(): Column {
         return this.y;
     }
+}
+
+export enum Row {
+    top = 0,
+    middle = 1,
+    bottom = 2,
+}
+
+export enum Column {
+    left = 0,
+    center = 1,
+    right = 2,
 }

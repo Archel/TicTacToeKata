@@ -18,10 +18,6 @@ class Board {
     }
 
     public placeMark(mark: PlayerMark, coordinate: Coordinate): void {
-        if (this.isOutOfBounds(coordinate)) {
-            throw new MarkOutOfBounds();
-        }
-
         const boardCellIndex = this.calculateBoardCellIndex(coordinate);
 
         if (this.cellIsFilled(coordinate)) {
