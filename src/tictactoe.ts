@@ -41,7 +41,7 @@ class Tictactoe {
     }
 
     private getNextPlayer(): PlayerMark {
-        return Mark.equals(this.currentPlayer, PlayerMark.X()) ? PlayerMark.O() : PlayerMark.X();
+        return (this.currentPlayer.equals(PlayerMark.X())) ? PlayerMark.O() : PlayerMark.X();
     }
 }
 

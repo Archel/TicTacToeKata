@@ -22,7 +22,7 @@ describe("TicTacToe should", () => {
     });
 
     it("start with X player", () => {
-        expect(Mark.equals(tictactoe.whoIsCurrentPlayer(), PlayerMark.X())).toBe(true);
+        expect(tictactoe.whoIsCurrentPlayer().equals(PlayerMark.X())).toBe(true);
     });
 
     it("throws an exception if we do a incorrect movement", () => {
@@ -44,7 +44,7 @@ describe("TicTacToe should", () => {
         tictactoe.play(new Coordinate(2, 1));
         tictactoe.play(new Coordinate(0, 2));
 
-        expect(Mark.equals(tictactoe.winner(), PlayerMark.X())).toBe(true);
+        expect(tictactoe.winner().equals(PlayerMark.X())).toBe(true);
     });
 
     it("has a draw game", () => {
